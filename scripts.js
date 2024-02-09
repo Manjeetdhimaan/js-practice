@@ -255,7 +255,7 @@ console.log(sortedTImeArray);
 // sorted array ends
 
 
-const numbers = [1, 4, 7, 5, 2, 3, 6];
+const numbers = [1, 4, 1, 5, 2, 3, 6];
 // check if any two values in the have a sum of 9 without using nested
 
 const checkSum = (numArr, sumTarget) => {
@@ -276,7 +276,24 @@ const checkSum = (numArr, sumTarget) => {
     console.log(pairSumValues);
 }
 
+const checkTwoNumbers = (numArr, targetValue) => {
+    const obj = {};
+    for(let i = 0; i<numArr.length; i++) {
+        const complement = targetValue - numArr[i];
+        if(complement in obj) {
+            console.log({
+                ['index=' +i]: numArr[i],
+                ['index=' + obj[complement]]: complement
+            });
+            // return
+        }
+        obj[numArr[i]] = i;
+    }
+    console.log(obj);
+}
+
 checkSum(numbers, 9);
+checkTwoNumbers(numbers, 9);
 // finished
 
 // promises
@@ -326,6 +343,74 @@ handleFn();
 
 init = false;
 
+function RegularFunction() {
+    this.value = 1;
+    console.log("Regular Function:", this);
+    setTimeout(function() {
+      // In non-strict mode, 'this' refers to the global object (window)
+      // Using 'this.value++' here may result in unexpected behavior
+      this.value++;
+      console.log("Regular Function:", this);
+    }, 1000);
+  }
+  
+  // Usage
+  const regularObj = new RegularFunction();
+
+  const duplicateArr = [
+    {
+        id: 1,
+        name: "Manjeet Singh"
+    },
+    {
+        id: 1,
+        name: "Manjeet Singh"
+    },
+    {
+        id: 2,
+        name: "Test Singh"
+    },
+  ];
+
+//   function removeDuplicates(arr, key) {
+//     return arr.filter((item, index) =>
+//       key ? arr.findIndex(obj => obj[key] === item[key]) === index : arr.indexOf(item) === index
+//     );
+//   }
+  
+//   const uniqueArr = removeDuplicates(duplicateArr, 'id');
+//   console.log(uniqueArr);
+
+// const uniqueIds = duplicateArr.map(item => item.id);
+// for(let item of duplicateArr) {
+// const result = [];
+// }
+// console.log(uniqueArr);
+
+function removeDuplicates(arr, key) {
+    const result = [];
+    const keys = [];
+    for(let item of arr) {
+        const keyValue = item[key];
+        if(!keys.includes(keyValue)) {
+            keys.push(keyValue);
+            result.push(item);
+        }
+    }
+    return result;
+}
+
+const uniqueValues = removeDuplicates(duplicateArr, 'id');
+
+const uniqueArr = [...new Map(duplicateArr.map(obj => [obj.id, obj])).values()];
+
+console.log(uniqueValues);
+
+let ad = 10;
+ad = "Test";
+console.log(ad);
+
+
 // function bluify(e) {
 //     console.log(this === e.currentTarget);
 //     console.log(this === e.target);
@@ -343,3 +428,4 @@ init = false;
 // In objects- If normal function is used, it refers to the object in which this keyword is used and in arrow functions it referes to its lexical context (which may be global object if object is declared globally).
 // In arrow functions, this keyword referes to lexical context.
 // this keyword behaves how and where this keyword is used.
+// In constructor function this keyword refers to the function itself
