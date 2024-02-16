@@ -23,11 +23,23 @@ worker.onmessage = function (event) {
 // worker.postMessage('startLoop');
 
 window.addEventListener('unload', () => {
-    localStorage.setItem('search-value', tempSearchValue);
-    localStorage.setItem('suggestions', JSON.stringify(suggestions));
+    if (tempSearchValue && tempSearchValue !== null) {
+        localStorage.setItem('search-value', tempSearchValue);
+    }
+
+    if (suggestions && suggestions[0] !== null) {
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+    }
+    localStorage.setItem('color-scheme', document.querySelector('html').style.colorScheme || 'dark');
 });
 
 const getLocalStorageData = () => {
+
+    const colorScheme = localStorage.getItem('color-scheme');
+    if (colorScheme) {
+        document.querySelector('html').style.colorScheme = colorScheme;
+    }
+
     const searchValue = localStorage.getItem('search-value');
     if (searchValue) {
         tempSearchValue = searchValue;
@@ -278,11 +290,11 @@ const checkSum = (numArr, sumTarget) => {
 
 const checkTwoNumbers = (numArr, targetValue) => {
     const obj = {};
-    for(let i = 0; i<numArr.length; i++) {
+    for (let i = 0; i < numArr.length; i++) {
         const complement = targetValue - numArr[i];
-        if(complement in obj) {
+        if (complement in obj) {
             console.log({
-                ['index=' +i]: numArr[i],
+                ['index=' + i]: numArr[i],
                 ['index=' + obj[complement]]: complement
             });
             // return
@@ -346,18 +358,18 @@ init = false;
 function RegularFunction() {
     this.value = 1;
     console.log("Regular Function:", this);
-    setTimeout(function() {
-      // In non-strict mode, 'this' refers to the global object (window)
-      // Using 'this.value++' here may result in unexpected behavior
-      this.value++;
-      console.log("Regular Function:", this);
+    setTimeout(function () {
+        // In non-strict mode, 'this' refers to the global object (window)
+        // Using 'this.value++' here may result in unexpected behavior
+        this.value++;
+        console.log("Regular Function:", this);
     }, 1000);
-  }
-  
-  // Usage
-  const regularObj = new RegularFunction();
+}
 
-  const duplicateArr = [
+// Usage
+const regularObj = new RegularFunction();
+
+const duplicateArr = [
     {
         id: 1,
         name: "Manjeet Singh"
@@ -370,14 +382,14 @@ function RegularFunction() {
         id: 2,
         name: "Test Singh"
     },
-  ];
+];
 
 //   function removeDuplicates(arr, key) {
 //     return arr.filter((item, index) =>
 //       key ? arr.findIndex(obj => obj[key] === item[key]) === index : arr.indexOf(item) === index
 //     );
 //   }
-  
+
 //   const uniqueArr = removeDuplicates(duplicateArr, 'id');
 //   console.log(uniqueArr);
 
@@ -390,9 +402,9 @@ function RegularFunction() {
 function removeDuplicates(arr, key) {
     const result = [];
     const keys = [];
-    for(let item of arr) {
+    for (let item of arr) {
         const keyValue = item[key];
-        if(!keys.includes(keyValue)) {
+        if (!keys.includes(keyValue)) {
             keys.push(keyValue);
             result.push(item);
         }
@@ -416,7 +428,7 @@ console.log(ad);
 //     console.log(this === e.target);
 //     this.style.backgroundColor = "#A5D9F3";
 //   }
-  
+
 //   const elements = document.getElementsByTagName("*");
 //   for (const element of elements) {
 //     element.addEventListener("click", bluify, false);
@@ -429,3 +441,122 @@ console.log(ad);
 // In arrow functions, this keyword referes to lexical context.
 // this keyword behaves how and where this keyword is used.
 // In constructor function this keyword refers to the function itself
+
+
+(function () {
+    const arr = new Array('1000', 'test');
+    console.log(arr);
+    console.log(arr.length)
+})();
+
+function toggleMode() {
+    const html = document.querySelector('html');
+    const theme = document.querySelector('html').style.colorScheme;
+    if (theme === 'dark' || theme === '') {
+        html.style.colorScheme = 'light';
+    }
+    else {
+        html.style.colorScheme = 'dark';
+    }
+}
+
+const numersArray = [1, 3, 5, 15, 10, 13, 70, 20];
+
+function secondLargest(arr) {
+    let secondLargestNum = 0;
+    let largerNumber = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] > largerNumber) {
+            secondLargestNum = largerNumber;
+            largerNumber = arr[i];
+        }
+        else if (arr[i] > secondLargestNum && arr[i] !== largerNumber) {
+            secondLargestNum = arr[i];
+        }
+    }
+    return secondLargestNum;
+}
+
+console.log("secondLargest ==>", secondLargest(numersArray));
+
+
+const getSum = (a, b) => {
+    const promise = new Promise((resolve, reject) => {
+        if(typeof a === 'number' && typeof b === 'number') {
+            resolve(a+b)
+        }
+    });
+    return promise;
+}
+
+
+async function getResult() {
+    const res = await getSum(2, 3);
+    return res;
+}
+
+console.log(getResult());
+
+
+function outerFunction () {
+    let a = 10;
+    return function () {
+        return 2 + a;
+    }
+}
+
+const resultOfClosure = outerFunction();
+
+console.log(resultOfClosure());
+
+
+const arrayNumbers = [4, 6, 2, 1, 10, 9];
+
+function sortArray(arr) {
+    const length = arr.length
+    for(let i = 0; i<length; i++) {
+        for(let j=0; j<arr.length; j++) {
+            if(arr[j] > arr[j + 1]) {
+                const temp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = temp;
+            }
+        }
+    }
+    return arr;
+}
+
+console.log(sortArray(arrayNumbers));
+
+// let a = [1,2,3];
+// let b = Array.from(a);
+// a.push(4);
+// console.log(a);
+// console.log(b);
+
+// let a = 7;
+// let b = a;
+// a = 10;
+// console.log(a);
+// console.log(b);
+
+// function checkToken(req, res, next) {
+
+//     const userToken = "token1";
+//     const token  = req.headers['Authorization'].split;
+//     if(token === userToken) {
+//         next();
+//     }
+//     else {
+//         return res.status(404).json({
+            
+//         });
+//     }
+// }
+
+// app.get('api/get-user', checkToken, function());
+
+
+// db.collection.find({
+//     "$gt": 1000,
+// }).sort({salary: -1}).limit(3).skip(2);

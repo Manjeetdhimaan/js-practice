@@ -5,102 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Practice</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-
-        }
-
-        /* body {
-            background-color: #333;
-        } */
-
-        header .search-bar {
-            /* width: 100%; */
-            margin: auto;
-            text-align: center;
-            padding: 10px;
-            position: relative;
-            z-index: 100;
-        }
-
-        header .search-bar input[type="search"] {
-            background-color: aqua;
-            outline: none;
-            width: 50%;
-            height: 40px;
-            padding: 10px;
-            margin: auto;
-            border: 1px solid green;
-            transition: background-color 0.3s;
-        }
-
-        header .search-bar input[type="search"]:hover {
-            background-color: transparent;
-        }
-
-        header .search-bar input[type="search"]:focus {
-            background-color: antiquewhite;
-        }
-
-        header .search-bar .search-suggesstions {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 0 10px 20px;
-            background-color: rgba(0, 255, 255, 0.581);
-            width: 49.3%;
-            text-align: left;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
-            max-height: 30vh;
-            overflow: auto;
-            visibility: hidden;
-            opacity: 0;
-            top: 0;
-            transition: all 0.2s ease-in-out;
-        }
-
-        header .search-bar .show.search-suggesstions {
-            visibility: visible;
-            opacity: 1;
-            top: 50px;
-        }
-
-        header .search-bar .search-suggesstions ul li {
-            padding: 5px;
-            list-style: none;
-            display: flex;
-            justify-content: space-between;
-            padding-right: 20px;
-            cursor: pointer;
-        }
-
-        header .search-bar .search-suggesstions ul li .cross {
-            color: red;
-            cursor: pointer;
-            padding: 5px;
-        }
-
-        .backdrop {
-            position: fixed;
-            inset: 0;
-            background-color: transparent;
-            display: none;
-            z-index: 99;
-        }
-
-        .show.backdrop {
-            display: block;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="backdrop" id="backdrop" tabindex="1" onclick="hideSuggestions()"></div>
     <main>
+        <h1>Hello</h1>
         <header>
             <div class="search-bar">
                 <input type="search" id="input-search" placeholder="Type to get results..."
@@ -110,9 +21,14 @@
 
                     </ul>
                 </div>
-
             </div>
         </header>
+
+        <div class="dp-img">
+            <img src="https://media-del1-2.cdn.whatsapp.net/v/t61.24694-24/396248630_360897803017805_5658984790231184921_n.jpg?ccb=11-4&oh=01_AdSHeTQVNwcwh6KOJREn-r8jdVhUiJcpcTWkrWN-KbnFJg&oe=65CEFE1A&_nc_sid=e6ed6c&_nc_cat=108" alt="">
+        </div>
+
+        <button onclick="toggleMode()" class="toggle-mode">Toggle mode</button>
     </main>
     <script src="scripts.js"></script>
 </body>

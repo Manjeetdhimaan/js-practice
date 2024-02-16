@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+html {
+    color-scheme: dark;
+}
+
+/* body {
+    background-color: #333;
+} */
+
+header .search-bar {
+    /* width: 100%; */
+    margin: auto;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    z-index: 100;
+}
+
+header .search-bar input[type="search"] {
+    background-color: aqua;
+    outline: none;
+    width: 50%;
+    height: 40px;
+    padding: 10px;
+    margin: auto;
+    border: 1px solid green;
+    transition: background-color 0.3s;
+}
+
+header .search-bar input[type="search"]:hover {
+    background-color: transparent;
+}
+
+header .search-bar input[type="search"]:focus {
+    background-color: antiquewhite;
+}
+
+header .search-bar .search-suggesstions {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 0 10px 20px;
+    background-color: rgba(0, 255, 255, 0.581);
+    width: 49.3%;
+    text-align: left;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    max-height: 30vh;
+    overflow: auto;
+    visibility: hidden;
+    opacity: 0;
+    top: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+header .search-bar .show.search-suggesstions {
+    visibility: visible;
+    opacity: 1;
+    top: 50px;
+}
+
+header .search-bar .search-suggesstions ul li {
+    padding: 5px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+header .search-bar .search-suggesstions ul li .cross {
+    color: red;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: transparent;
+    display: none;
+    z-index: 99;
+}
+
+.show.backdrop {
+    display: block;
+}
+
+.dp-img {
+    margin: auto;
+    text-align: center;
+    height: 400px;
+}
+
+.dp-img img {
+    border-radius: 50%;
+    transition: border-radius 1.9s;
+}
+
+.dp-img img:hover {
+    border-radius: 12px;
+}
+
+.toggle-mode {
+    color: #fff;
+    padding: 12px;
+    background-color: #333;
+    cursor: pointer;
+    outline: none;
+    border-radius: 8px;
+    border: none;
+}
