@@ -78,7 +78,7 @@ const debounce = (fn, delay) => {
         if (timer) clearTimeout(timer);
 
         timer = setTimeout(() => {
-            fn.apply(this, args);
+            fn.call(this, ...args);
         }, delay);
     }
 }
@@ -482,8 +482,8 @@ console.log("secondLargest ==>", secondLargest(numersArray));
 
 const getSum = (a, b) => {
     const promise = new Promise((resolve, reject) => {
-        if(typeof a === 'number' && typeof b === 'number') {
-            resolve(a+b)
+        if (typeof a === 'number' && typeof b === 'number') {
+            resolve(a + b)
         }
     });
     return promise;
@@ -498,7 +498,7 @@ async function getResult() {
 console.log(getResult());
 
 
-function outerFunction () {
+function outerFunction() {
     let a = 10;
     return function () {
         return 2 + a;
@@ -514,12 +514,12 @@ const arrayNumbers = [4, 6, 2, 1, 10, 9];
 
 function sortArray(arr) {
     const length = arr.length
-    for(let i = 0; i<length; i++) {
-        for(let j=0; j<arr.length; j++) {
-            if(arr[j] > arr[j + 1]) {
+    for (let i = 0; i < length; i++) {
+        for (let j = 0; j < arr.length; j++) {
+            if (arr[j] > arr[j + 1]) {
                 const temp = arr[j];
-                arr[j] = arr[j+1];
-                arr[j+1] = temp;
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
     }
@@ -549,7 +549,7 @@ console.log(sortArray(arrayNumbers));
 //     }
 //     else {
 //         return res.status(404).json({
-            
+
 //         });
 //     }
 // }
@@ -560,3 +560,110 @@ console.log(sortArray(arrayNumbers));
 // db.collection.find({
 //     "$gt": 1000,
 // }).sort({salary: -1}).limit(3).skip(2);
+
+
+const user2 = {
+    name: "Manjeet Singh",
+    address: {
+        personal: {
+            city: "Samana",
+            dist: "Patiala",
+            area: "Kakrala"
+        },
+        office: {
+            city: "Mohali",
+            dist: "Mohali",
+            area: {
+                landmark: "Mohali tower",
+                details: {
+                    sector: "74",
+                    phase: "8b"
+                }
+            }
+
+        }
+    },
+    x: function () {
+        console.log(this);
+    }
+}
+
+Object.freeze(user2);
+
+function deepFreeze(obj) {
+    Object.freeze(obj);
+    for (let key in obj) {
+        if(typeof obj[key] === 'object') {
+            deepFreeze(obj[key]);
+        }
+    }
+}
+
+deepFreeze(user2);
+
+// user2.address.office.city = 'Test'; // give you error because object is deeply freezed
+console.log(user2);
+
+// *********************************************************//
+
+// prototype for array.map
+Array.prototype.customMap = function(callback) {
+    const newArray = [];
+    for (let i = 0; i < this.length; i++) {
+        newArray.push(callback(this[i], i, this));
+    }
+    return newArray;
+};
+
+// Test the customMap method
+const numbers2 = [1, 2, 3, 4, 5];
+
+const doubledNumbers = numbers2.customMap((value) => value * 2);
+console.log(doubledNumbers); // Output: [2, 4, 6, 8, 10]
+
+const squaredNumbers = numbers2.customMap((value) => value ** 2);
+console.log(squaredNumbers); 
+
+
+// *********************************************************//
+
+// prototype for array.sort
+// Define the customSort method
+Array.prototype.customSort = function(compareFunction) {
+    const array = [...this]; // Create a copy of the original array
+    quickSort(array, compareFunction); // Sort the copied array in place
+    return array; // Return the sorted array
+};
+
+// Quicksort algorithm
+function quickSort(array, compareFunction, left = 0, right = array.length - 1) {
+    if (left < right) {
+        const pivotIndex = partition(array, compareFunction, left, right);
+        quickSort(array, compareFunction, left, pivotIndex - 1);
+        quickSort(array, compareFunction, pivotIndex + 1, right);
+    }
+}
+
+function partition(array, compareFunction, left, right) {
+    const pivot = array[right];
+    let i = left - 1;
+    for (let j = left; j < right; j++) {
+        if (compareFunction(array[j], pivot) <= 0) {
+            i++;
+            swap(array, i, j);
+        }
+    }
+    swap(array, i + 1, right);
+    return i + 1;
+}
+
+function swap(array, i, j) {
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+}
+
+// Test the customSort method
+
+const sortedNumbers = numbers2.customSort((a, b) => a - b);
+console.log(sortedNumbers); // Output: [1, 2, 3, 5, 8]
